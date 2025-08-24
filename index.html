@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>لعبة الأزرار 🔥</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      font-family: Tahoma, sans-serif;
+      color: white;
+      text-align: center;
+    }
+    #score {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 24px;
+      background: rgba(0,0,0,0.5);
+      padding: 10px 20px;
+      border-radius: 12px;
+    }
+    .btn {
+      position: absolute;
+      padding: 10px 20px;
+      font-size: 18px;
+      background: #ff4b2b;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .btn:hover {
+      transform: scale(1.2);
+    }
+  </style>
+</head>
+<body>
+  <div id="score">النقاط: 0</div>
+
+  <script>
+    let score = 0;
+    let speed = 2000; // بداية السرعة (2 ثانية)
+
+    function spawnButton() {
+      let btn = document.createElement("button");
+      btn.classList.add("btn");
+      btn.innerText = "اضغطني!";
+      
+      // مكان عشوائي
+      btn.style.top = Math.random() * (window.innerHeight - 50) + "px";
+      btn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+
+      // لما يكبس الزر
+      btn.onclick = () => {
+        score++;
+        document.getElementById("score").innerText = "النقاط: " + score;
+        btn.remove();
+
+        // كل 5 نقاط تصير اللعبة أسرع
+        if (score % 5 === 0 && speed > 400) {
+          speed -= 200; 
+        }
+      };
+
+      document.body.appendChild(btn);
+
+      // إذا ما كبست الزر يختفي لحاله
+      setTimeout(() => {
+        if (document.body.contains(btn)) {
+          btn.remove();
+        }
+      }, speed);
+    }
+
+    // استدعاء الأزرار بشكل متكرر
+    setInterval(spawnButton, 1000);
+  </script>
+</body>
+        </html>
